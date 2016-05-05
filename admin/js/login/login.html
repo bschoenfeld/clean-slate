@@ -1,0 +1,23 @@
+<div>
+    <h4>Sign In</h4>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" ng-model="vm.email">
+    </div>
+    <div>
+        <label for="password">password</label>
+        <input type="password" name="password" ng-model="vm.password">
+    </div>
+    <button class="btn-primary" ng-click="vm.login()">Login</button>
+    <hr/>
+    <h4>Or Create a new account</h4>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" ng-model="vm.signupEmail">
+    </div>
+    <div>
+        <label for="password">password</label>
+        <input type="password" name="password" ng-model="vm.signupPassword">
+    </div>
+    <button class="btn-primary" ng-click="vm.signup()">Login</button>
+</div>

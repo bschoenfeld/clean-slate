@@ -1,0 +1,48 @@
+<div class="container">
+    
+<h2>Partner Organizations</h2>
+
+
+<p>
+    The following organizations are partners with Mission to Launch using Clean Slate in DC.
+</p>
+
+
+<ul>
+    <li ng-repeat="org in organizations">
+        {{ org.title }}
+    </li>
+    
+</ul>
+
+
+
+<div class="panel panel-default" style="max-width: 380px">
+                <div class="panel-heading">
+                   Add New Organization
+                </div>
+                <div class="panel-body">
+                         <p>
+                               Title:<br>
+                                <input type="text" name="title" ng-model="vm.title" required>
+                            </p>
+                         <p>
+                               Email:<br>
+                                <input type="text" name="email" ng-model="vm.email" required>
+                            </p>
+                            
+                         <p>
+                               Password:<br>
+                                <input type="text" name="password" ng-model="vm.password" required>
+                            </p>
+                        <p>
+                             <button class="btn-primary" ng-click="vm.addOrganization()">Add Organization</button>
+   
+                        </p>
+                        
+                    
+                    
+                </div>
+</div>
+
+</div>
