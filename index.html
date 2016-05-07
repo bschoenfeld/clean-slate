@@ -39,7 +39,18 @@
                         <img src="img/logo.jpg" alt="logo" width="200">
                     </a>
                 </div>
-                <div class="panel-group" id="accordion" role="tablist">
+                <div id="navbar-content" class="collapse navbar-collapse">
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li><a ui-sref="home" data-toggle="collapse" data-target="#navbar-content.in">Home</a></li>
+                            <li><a ui-sref="contact" data-toggle="collapse" data-target="#navbar-content.in">Contact Us</a></li>
+                            <li><a href="admin/login.html" >Lawyer's Login Page </a></li>
+                       
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group" id="accordion" role="tablist">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title" ng-click="toggleCollapse()" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">How do I know if I have a DC Criminal Record?</h4>
@@ -53,17 +64,6 @@
                 Superior Court of the District of Columbia.
             </p>      
                   </div>
-                </div>
-            </div>
-                <div id="navbar-content" class="collapse navbar-collapse">
-                    <div class="navbar-right">
-                        <ul class="nav navbar-nav">
-                            <li><a ui-sref="home" data-toggle="collapse" data-target="#navbar-content.in">Home</a></li>
-                            <li><a ui-sref="contact" data-toggle="collapse" data-target="#navbar-content.in">Contact Us</a></li>
-                            <li><a href="admin/login.html" >Lawyer's Login Page </a></li>
-                       
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="panel panel-default">
