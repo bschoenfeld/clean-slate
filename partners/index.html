@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="manager" data-framework="firebase">
+<html lang="en" ng-app="partner" data-framework="firebase">
 	<head>
         <meta charset="utf-8">
         <title>Clean Slate Administration</title>
@@ -43,8 +43,8 @@
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
                             <li><a ui-sref="home" data-toggle="collapse" data-target="#navbar-content.in">Home</a></li>
-                            <li><a ui-sref="organizations" data-toggle="collapse" data-target="#navbar-content.in">Partners</a></li>
-                            <li><a ng-click="vm.logOut()">Log out</a></li>
+                            <li><a ui-sref="clients" data-toggle="collapse" data-target="#navbar-content.in">Clients</a></li>
+                            <li><a ui-sref="login">Log out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -67,11 +67,11 @@
 
         
         
-        <script src="js/management.js"></script>
+        <script src="partners.js"></script>
         <script src="js/services/userService.js"></script>
         <script src="js/login/loginController.js"></script>
         <script src="js/home/homeController.js"></script>
-        <script src="js/organizations/organizationsController.js"></script>
+        <script src="js/client/clientController.js"></script>
 		
 	</body>
 </html>

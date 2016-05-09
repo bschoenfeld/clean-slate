@@ -1,0 +1,20 @@
+<div class="container">
+    
+<h2>Clients</h2>
+
+
+<p>
+    The following clients have been added for your clinic.
+</p>
+
+     <button ui-sref="newClient" class="btn btn-success">Add New Client</button>
+               
+<ul>
+    <li ng-repeat="client in clients">
+        {{ client.title }}
+    </li>
+    
+</ul>
+
+
+</div>
