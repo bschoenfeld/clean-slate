@@ -27,6 +27,53 @@
         
 	</head>
 	<body>
+<form ng-hide="currentUser">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-content">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../#/home" >
+                    <img src="../img/logo.jpg" alt="logo" width="200">
+                </a>
+            </div>
+            <div id="navbar-content" class="collapse navbar-collapse">
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../#/home" data-toggle="collapse" data-target="#navbar-content.in">Home</a></li>
+                        <li><a href="../#/contact" data-toggle="collapse" data-target="#navbar-content.in">Contact Us</a></li>
+                        <li><a href="../partners" data-toggle="collapse" data-target="#navbar-content.in">Lawyer's Login Page </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <p> </p>
+
+        <h2 >Sign In</h2>
+        <label for="inputEmail" class="sr-only">User Name</label>
+        <input type="username" id="inputName" ng-model="user.username" class="form-control" placeholder="Username" required autofocus>
+        <br />
+
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" ng-model="user.password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="logIn(user)" >Log In</button>
+    </div>
+        
+</form> 
+
+<div ng-show="currentUser">     
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -35,7 +82,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" ui-sref="home">
+                    <a class="navbar-brand" href="../#/home">
                         <img src="../img/logo.jpg" alt="logo" width="200">
                     </a>
                 </div>
@@ -44,16 +91,18 @@
                         <ul class="nav navbar-nav">
                             <li><a ui-sref="home" data-toggle="collapse" data-target="#navbar-content.in">Home</a></li>
                             <li><a ui-sref="organizations" data-toggle="collapse" data-target="#navbar-content.in">Partners</a></li>
-                            <li><a ng-click="vm.logOut()">Log out</a></li>
+                            <li><a ng-click="logOut()">Log out</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
+
         <div class="container">
             
 		    <div ui-view></div>
         </div>
+</div>
         <!-- AngularJS -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
         <!-- AngularJS UI Router -->

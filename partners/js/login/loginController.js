@@ -5,7 +5,7 @@
         .module('partner')
         .controller('LoginController', LoginController);
 
-    function LoginController($firebaseAuth, userService, $state){
+    function LoginController($firebaseAuth, userService, $state, $rootScope){
         var vm = this;
         var ref = new Firebase($rootScope.fbUrl);
         vm.authObj = $firebaseAuth(ref);
@@ -30,6 +30,7 @@
                         if(snapshot) {
                             var profile = snapshot.val();
                             console.log(profile);
+                            $rootScope.profile = profile;
                             userService.setUser(profile);
                             $state.go('home');
                         }   

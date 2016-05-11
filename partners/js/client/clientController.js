@@ -8,12 +8,19 @@
     function ClientController($rootScope, $scope, $firebaseAuth, userService, $state, $firebaseArray){
         var vm = this;
         var ref = new Firebase($rootScope.fbUrl);
-        var clientRef = ref.child('clients');
-        vm.authObj = $firebaseAuth(ref);
- 
-        $scope.clients = $firebaseArray(clientRef);
+        var orgRef = ref.child('organizations').child($rootScope.currentUser.uid);
+        var clientRef = orgRef.child("clients");
+  
 
-        vm.addClient = addClient;
+
+        
+        
+        console.log($rootScope.currentUser);
+        vm.authObj = $firebaseAuth(ref);
+         
+        $scope.clients = $firebaseArray(orgRef.child('clients'));
+
+        vm.saveClient = saveClient;
         vm.logOut = logOut;
         vm.initDummyData = initDummyData;
         vm.addRecordItem = addRecordItem;
@@ -23,30 +30,11 @@
         
         vm.initDummyData();
 
-        function addClient(){
+        function saveClient(){
             //Must change to add client as data NOT as actual users.
-            if(vm.title && vm.email && vm.password) {
-                vm.authObj.$createUser({
-                    email: vm.email,
-                    password: vm.password
-                })
-                .then(function(userData){
-                    return vm.authObj.$authWithPassword({
-                        email: vm.email,
-                        password: vm.password
-                    });
-                })
-                .then(function(authData){
-                    orgRef.push().set({
-                        email: vm.email,
-                        password: vm.password,
-                        title: vm.title
-                    })
-                    
-                })
-            }
+     
         };
-
+        
         function logOut(){
             console.log(vm.authObj);
                vm.authObj.$logout();
