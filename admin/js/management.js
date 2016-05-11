@@ -5,6 +5,11 @@
 
     angular
         .module('manager')
+        .run(function($rootScope) {
+            //Base Firebase URL
+            $rootScope.fbUrl = 'https://shippout-v0.firebaseio.com/';
+   
+        })
         .config(function($stateProvider, $urlRouterProvider){
 
             $stateProvider.state('login', {

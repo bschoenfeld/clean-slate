@@ -5,9 +5,9 @@
         .module('partner')
         .controller('ClientController', ClientController);
 
-    function ClientController($scope, $firebaseAuth, userService, $state, $firebaseArray){
+    function ClientController($rootScope, $scope, $firebaseAuth, userService, $state, $firebaseArray){
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com');
+        var ref = new Firebase($rootScope.fbUrl);
         var clientRef = ref.child('clients');
         vm.authObj = $firebaseAuth(ref);
  
@@ -24,6 +24,7 @@
         vm.initDummyData();
 
         function addClient(){
+            //Must change to add client as data NOT as actual users.
             if(vm.title && vm.email && vm.password) {
                 vm.authObj.$createUser({
                     email: vm.email,

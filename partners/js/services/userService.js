@@ -4,9 +4,9 @@
     angular
         .module('partner')
         .service('userService', UserServiceImpl)
-        .factory("Auth", ["$firebaseAuth",
-            function($firebaseAuth) {
-                var ref = new Firebase("https://docs-sandbox.firebaseio.com", "example3");
+        .factory("Auth", ["$firebaseAuth", "$rootScope",
+            function($firebaseAuth, $rootScope) {
+                var ref = new Firebase($rootScope.fbUrl);
                 return $firebaseAuth(ref);
             }
         ]);

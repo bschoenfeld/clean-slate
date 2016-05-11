@@ -5,9 +5,9 @@
         .module('manager')
         .controller('LoginController', LoginController);
 
-    function LoginController($firebaseAuth, userService, $state){
+    function LoginController($rootScope, $firebaseAuth, userService, $state){
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com/');
+        var ref = new Firebase($rootScope.fbUrl);
         vm.authObj = $firebaseAuth(ref);
 
 
