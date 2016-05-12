@@ -22,16 +22,17 @@
                 })
                 
                 .then(function(authData){
-                    
-           //         console.log("User " + authData.uid + " is logged in with " + authData.provider);
 
                     ref.child("organizations").orderByChild("userID").equalTo(authData.uid).on("child_added", function(snapshot) {
                 
                         if(snapshot) {
                             var profile = snapshot.val();
                             console.log(profile);
+                            profile.key = snapshot.key();
                             $rootScope.profile = profile;
                             userService.setUser(profile);
+                            console.log(profile);
+                            
                             $state.go('home');
                         }   
                     });

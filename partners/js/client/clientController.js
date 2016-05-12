@@ -6,14 +6,12 @@
         .controller('ClientController', ClientController);
 
     function ClientController($rootScope, $scope, $firebaseAuth, userService, $state, $firebaseArray){
+        
+        //$scope.currentUser = $rootScope.currentUser.profile;
         var vm = this;
         var ref = new Firebase($rootScope.fbUrl);
-        var orgRef = ref.child('organizations').child($rootScope.currentUser.uid);
+        var orgRef = ref.child('organizations').child($rootScope.currentUser.profile.key);       
         var clientRef = orgRef.child("clients");
-  
-
-
-        
         
         console.log($rootScope.currentUser);
         vm.authObj = $firebaseAuth(ref);
@@ -30,9 +28,31 @@
         
         vm.initDummyData();
 
-        function saveClient(){
+        function saveClient(newClient){
+             
+            console.log("about to save client ");
+            console.log(newClient);
+            
+            if($scope.records)
+                newClient.records = $scope.records;
+            else
+                newClient.records = [];
+                
             //Must change to add client as data NOT as actual users.
-     
+            var newclientRef = clientRef.push();
+            var dob = new Date(newClient.dobYear, newClient.dobMonth, newClient.dobDay);
+            newclientRef.set({
+                first: newClient.first,
+                middle: newClient.middle,
+                last: newClient.last,
+                phone: newClient.phone,
+                email: newClient.email,
+                address1: newClient.address1,
+                address2: newClient.address2,
+                pendingCase: newClient.pendingCase, 
+                dob: dob,
+                record: newClient.records
+            });
         };
         
         function logOut(){

@@ -14,15 +14,27 @@
             $rootScope.logIn = function(form) {
                
                 if(form.email && form.password) {
-                        authObj.$authWithPassword({
-                        email: form.email,
-                        password: form.password
-                    })
-                    .then(function(authData){
-                        $rootScope.currentUser = authData;
-                        console.log(authData);
-                        $state.go('home');
-                    })
+                            authObj.$authWithPassword({
+                            email: form.email,
+                            password: form.password
+                        })
+                        .then(function(authData){
+                            $rootScope.currentUser = authData;
+                        
+                            ref.child("organizations").orderByChild("userID").equalTo(authData.uid).on("child_added", function(snapshot) {
+                    
+                                if(snapshot) {
+                                    var profile = snapshot.val();
+                                    profile.key = snapshot.key();
+                                    $rootScope.profile = profile;
+                                    $rootScope.currentUser.profile = profile;
+                                    console.log(profile);
+                                    console.log($rootScope.currentUser);
+                              
+                                }   
+                            });
+                            $state.go('home');
+                        })
                     .catch(function(err){
                         console.log(err);
                     });
@@ -37,7 +49,7 @@
             $rootScope.logOut = function() {
                 ref.unauth();
                 $rootScope.currentUser = null;
-                //$state.go('login');
+                $state.go('login');
             };
    
    
@@ -99,7 +111,7 @@
             
             
 
-            $urlRouterProvider.otherwise('/login');
+            $urlRouterProvider.otherwise('/home');
         });
 
 
