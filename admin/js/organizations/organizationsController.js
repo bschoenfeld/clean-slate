@@ -5,9 +5,9 @@
         .module('manager')
         .controller('OrgController', OrgController);
 
-    function OrgController($scope, $firebaseAuth, userService, $state, $firebaseArray){
+    function OrgController($rootScope, $scope, $firebaseAuth, userService, $state, $firebaseArray){
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com');
+        var ref = new Firebase($rootScope.fbUrl);
         var orgRef = ref.child('organizations');
         vm.authObj = $firebaseAuth(ref);
 

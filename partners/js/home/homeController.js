@@ -5,16 +5,17 @@
         .module('partner')
         .controller('HomeController', HomeController);
 
-    function HomeController($firebaseAuth, userService, $state){
-        console.log("tes");
+    function HomeController($scope, $rootScope, $firebaseAuth, userService, $state){
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com/');
+        var ref = new Firebase($rootScope.fbUrl);
         vm.authObj = $firebaseAuth(ref);
 
-        var currentUser = userService.getUser();
-
-        vm.title = currentUser.title;
-        
+        if($rootScope.currentUser)
+        {
+            console.log($rootScope.currentUser);                              
+            $scope.currentUser = $rootScope.currentUser.profile;
+            vm.title = $scope.currentUser.title;
+        }
         //console.log(currentUser);
     }
     

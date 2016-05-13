@@ -5,11 +5,13 @@
         .module('manager')
         .controller('HomeController', HomeController);
 
-    function HomeController($firebaseAuth, userService, $state){
+    function HomeController($rootScope, $firebaseAuth, userService, $state, $scope){
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com/');
+        var ref = new Firebase($rootScope.fbUrl);
         vm.authObj = $firebaseAuth(ref);
-
+        
+        
+        $scope.currentUser = $rootScope.currentUser
         console.log(userService.getUser());
 
     }

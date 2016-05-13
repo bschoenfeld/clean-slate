@@ -5,15 +5,20 @@
         .module('partner')
         .controller('ClientController', ClientController);
 
-    function ClientController($scope, $firebaseAuth, userService, $state, $firebaseArray){
+    function ClientController($rootScope, $scope, $firebaseAuth, userService, $state, $firebaseArray){
+        
+        //$scope.currentUser = $rootScope.currentUser.profile;
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com');
-        var clientRef = ref.child('clients');
+        var ref = new Firebase($rootScope.fbUrl);
+        var orgRef = ref.child('organizations').child($rootScope.currentUser.profile.key);       
+        var clientRef = orgRef.child("clients");
+        
+        console.log($rootScope.currentUser);
         vm.authObj = $firebaseAuth(ref);
- 
-        $scope.clients = $firebaseArray(clientRef);
+         
+        $scope.clients = $firebaseArray(orgRef.child('clients'));
 
-        vm.addClient = addClient;
+        vm.saveClient = saveClient;
         vm.logOut = logOut;
         vm.initDummyData = initDummyData;
         vm.addRecordItem = addRecordItem;
@@ -23,29 +28,33 @@
         
         vm.initDummyData();
 
-        function addClient(){
-            if(vm.title && vm.email && vm.password) {
-                vm.authObj.$createUser({
-                    email: vm.email,
-                    password: vm.password
-                })
-                .then(function(userData){
-                    return vm.authObj.$authWithPassword({
-                        email: vm.email,
-                        password: vm.password
-                    });
-                })
-                .then(function(authData){
-                    orgRef.push().set({
-                        email: vm.email,
-                        password: vm.password,
-                        title: vm.title
-                    })
-                    
-                })
-            }
+        function saveClient(newClient){
+             
+            console.log("about to save client ");
+            console.log(newClient);
+            
+            if($scope.records)
+                newClient.records = $scope.records;
+            else
+                newClient.records = [];
+                
+            //Must change to add client as data NOT as actual users.
+            var newclientRef = clientRef.push();
+            var dob = new Date(newClient.dobYear, newClient.dobMonth, newClient.dobDay);
+            newclientRef.set({
+                first: newClient.first,
+                middle: newClient.middle,
+                last: newClient.last,
+                phone: newClient.phone,
+                email: newClient.email,
+                address1: newClient.address1,
+                address2: newClient.address2,
+                pendingCase: newClient.pendingCase, 
+                dob: dob,
+                record: newClient.records
+            });
         };
-
+        
         function logOut(){
             console.log(vm.authObj);
                vm.authObj.$logout();

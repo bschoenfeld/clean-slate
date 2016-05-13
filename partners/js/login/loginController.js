@@ -5,9 +5,9 @@
         .module('partner')
         .controller('LoginController', LoginController);
 
-    function LoginController($firebaseAuth, userService, $state){
+    function LoginController($firebaseAuth, userService, $state, $rootScope){
         var vm = this;
-        var ref = new Firebase('blazing-torch-1225.firebaseIO.com/');
+        var ref = new Firebase($rootScope.fbUrl);
         vm.authObj = $firebaseAuth(ref);
         ref.unauth();
 
@@ -22,15 +22,17 @@
                 })
                 
                 .then(function(authData){
-                    
-           //         console.log("User " + authData.uid + " is logged in with " + authData.provider);
 
                     ref.child("organizations").orderByChild("userID").equalTo(authData.uid).on("child_added", function(snapshot) {
                 
                         if(snapshot) {
                             var profile = snapshot.val();
                             console.log(profile);
+                            profile.key = snapshot.key();
+                            $rootScope.profile = profile;
                             userService.setUser(profile);
+                            console.log(profile);
+                            
                             $state.go('home');
                         }   
                     });

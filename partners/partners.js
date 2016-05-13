@@ -5,15 +5,57 @@
 
     angular
         .module('partner')
-        .run(["$rootScope", "$state", function($rootScope, $state) {
-            $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
-                // We can catch the error thrown when the $requireAuth promise is rejected
-                // and redirect the user back to the home page
-                if (error === "AUTH_REQUIRED") {
-                    $state.go("login");
+        .run(['$rootScope', '$firebaseAuth', function($rootScope, $firebaseAuth, $scope, userService, $state, $stateProvider) {
+            //Base Firebase URL
+            $rootScope.fbUrl = 'https://clean-slate.firebaseio.com/';
+            var ref = new Firebase($rootScope.fbUrl);
+            var authObj = $firebaseAuth(ref);
+        
+            $rootScope.logIn = function(form) {
+               
+                if(form.email && form.password) {
+                            authObj.$authWithPassword({
+                            email: form.email,
+                            password: form.password
+                        })
+                        .then(function(authData){
+                            $rootScope.currentUser = authData;
+                        
+                            ref.child("organizations").orderByChild("userID").equalTo(authData.uid).on("child_added", function(snapshot) {
+                    
+                                if(snapshot) {
+                                    var profile = snapshot.val();
+                                    profile.key = snapshot.key();
+                                    $rootScope.profile = profile;
+                                    $rootScope.currentUser.profile = profile;
+                                    console.log(profile);
+                                    console.log($rootScope.currentUser);
+                              
+                                }   
+                            });
+                            $state.go('home');
+                        })
+                    .catch(function(err){
+                        console.log(err);
+                    });
                 }
-            });
+                else
+                {
+                    alert(" whats going on Invalid login credentials");   
+                }
+            };
+            
+            
+            $rootScope.logOut = function() {
+                ref.unauth();
+                $rootScope.currentUser = null;
+                $state.go('login');
+            };
+   
+   
+   
         }])
+       
         .config(function($stateProvider, $urlRouterProvider){
 
             $stateProvider.state('login', {
@@ -69,7 +111,7 @@
             
             
 
-            $urlRouterProvider.otherwise('/login');
+            $urlRouterProvider.otherwise('/home');
         });
 
 
