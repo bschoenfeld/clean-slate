@@ -86,10 +86,6 @@ angular.module("app", ["ui.router"])
                 default: return "";
             }
         };
-        $scope.status = {
-    isFirstOpen: true,
-    isFirstDisabled: false
-  };
         $scope.previousQuestion = function previousQuestion() {
             if ($scope.stateName === $scope.eligibilityFlow.start) {
                 $window.history.back();
