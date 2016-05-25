@@ -37,7 +37,6 @@
                     orgRef.push().set({
                         userID: authData.uid,
                         email: vm.email,
-                        password: vm.password,
                         title: vm.title
                     })
                     
