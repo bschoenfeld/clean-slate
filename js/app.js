@@ -1,4 +1,4 @@
-angular.module("app", ["ui.router"])
+angular.module("app", ["ui.router", "angulartics", "angulartics.google.analytics"])
     //Config
     .config(function($stateProvider, $urlRouterProvider) {
         "use strict";
@@ -45,11 +45,6 @@ angular.module("app", ["ui.router"])
                 url: "/contact",
                 templateUrl: "views/contact.html"
             });
-    })
-    .run(function($rootScope, $location, Analytics) {
-      $rootScope.$on('$stateChangeSuccess', function() {
-        Analytics.recordPageview($location.url());
-      });
     })
     //Controller
     .controller("EligibiltyController", function EligibilityController(
@@ -287,19 +282,4 @@ angular.module("app", ["ui.router"])
         };
         console.log(def);
         return def;
-    }])
-    .service('Analytics', function() {
-
-      this.recordPageview = function(url) {
-        ga('set', 'page', url);
-        ga('send', 'pageview');
-      };
-
-      this.recordEvent = function (category, action, label, value) {
-        var args = Array.prototype.slice.call(arguments);
-        args.unshift('event');
-        args.unshift('send');
-        ga.apply(ga, args);
-      };
-
-    });
+    }]);
